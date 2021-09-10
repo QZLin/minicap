@@ -1,0 +1,40 @@
+name: Build minicap
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Android NDK toolchain Setup
+        uses: nttld/setup-ndk@v1.0.6
+        with:
+          ndk-version: r21e
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      # - name: Fetch submodules
+      #   run: |
+      #     git submodule init
+      #     git submodule update
+      - name: Build
+        run: |
+          ndk-build
+          ls
+          ls libs
+          echo Build finish!
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: libs
+          path: libs
+          retention-days: 90
