@@ -1,9 +1,0 @@
-.gradle
-/*.tgz
-/.env
-/gdb.setup
-/libs/
-/libs/
-/obj/
-/prebuilt/
-/temp/
