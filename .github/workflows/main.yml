@@ -2,9 +2,9 @@ name: Build minicap
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -12,29 +12,32 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    defaults:
+      run:
+        shell: pwsh
     runs-on: windows-latest
     steps:
       - name: Android NDK toolchain Setup
         uses: nttld/setup-ndk@v1.0.6
         with:
           ndk-version: r21e
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
       - uses: actions/checkout@v2
         with:
+          repository: DeviceFarmer/minicap
           submodules: true
-      # - name: Fetch submodules
-      #   run: |
-      #     git submodule init
-      #     git submodule update
+
+      - run: ls
+
       - name: Build
         run: |
           ndk-build
           ls
           ls libs
-          echo Build finish!
+          Write-Output Build finish!
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
           name: libs
           path: libs
-          retention-days: 90
+          retention-days: 30
