@@ -23,11 +23,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo ${{ steps.get_latest.id }}
+      - run: echo ${{ steps.get_latest.outputs.id }}
+      
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
 
   build:
+    needs: check
     defaults:
       run:
         shell: pwsh
