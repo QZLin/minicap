@@ -38,14 +38,17 @@ jobs:
           echo v:$env:last_release
           echo v:$env:this_repo
           # echo v:$env:a
-          # ls Env:
+          ls Env:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
-          this_repo: ${{ github.event.repository.name }}
+          this_repo: ${{ github.event.repository.owner }}/${{ github.event.repository.name }}
+          this_repo2: ${{ github.event.repository}}
           # a: hiworld
 
       - name: check
         run: . ./check_if_new.ps1
+        env:
+          last_release: ${{ steps.get_latest.outputs.releases }}
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
