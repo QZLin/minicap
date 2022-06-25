@@ -21,7 +21,7 @@ jobs:
         uses: ctrlaltdev/get-releases-action@v1.1.0
         id: get_latest
         with:
-          repo: ${{ github.action_repository }}
+          repo: QZLin/minicap
           limit: 1
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -29,9 +29,11 @@ jobs:
         run: |
           echo v:$last_release
           echo v:$this_repo
+          echo v:$a
         env:
           last_release: ${{ steps.get_latest.releases }}
           this_repo: ${{ github.action_repository }}
+          a: hiworld
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
