@@ -38,7 +38,7 @@ jobs:
           echo v:$env:last_release
           echo v:$env:this_repo
           # echo v:$env:a
-          ls Env:
+          # ls Env:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
           this_repo: ${{ env.GITHUB_REPOSITORY }}
@@ -51,7 +51,7 @@ jobs:
           last_release: ${{ steps.get_latest.outputs.releases }}
 
       - name: test
-        run: echo v:$($Env:a)
+        run: echo v:$Env:a
         env:
           a: ${{ env.new_commit }}
 
@@ -66,27 +66,33 @@ jobs:
         shell: pwsh
     runs-on: windows-latest
     steps:
-      - name: Android NDK toolchain Setup
-        uses: nttld/setup-ndk@v1.0.6
-        with:
-          ndk-version: r21e
+      # - name: Android NDK toolchain Setup
+      #   uses: nttld/setup-ndk@v1.0.6
+      #   with:
+      #     ndk-version: r21e
 
-      - uses: actions/checkout@v2
-        with:
-          repository: DeviceFarmer/minicap
-          submodules: true
-          path: DeviceFarmer_minicap
+      # - uses: actions/checkout@v2
+      #   with:
+      #     repository: DeviceFarmer/minicap
+      #     submodules: true
+      #     path: DeviceFarmer_minicap
 
-      - run: ls
+      # - run: ls
 
-      - name: Build
+      # - name: Build
+      #   run: |
+      #     Push-Location DeviceFarmer_minicap
+      #     ndk-build
+      #     ls
+      #     ls libs
+      #     Write-Output Build finished!
+      #     Pop-Location
+      - name: Create fake output files for actions debug
         run: |
-          Push-Location DeviceFarmer_minicap
-          ndk-build
-          ls
-          ls libs
-          Write-Output Build finished!
-          Pop-Location
+          mkdir DeviceFarmer_minicap
+          mkdir DeviceFarmer_minicap/libs
+          New-Item .\DeviceFarmer_minicap\libs\test.txt
+
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
@@ -96,9 +102,10 @@ jobs:
       - name: Compress output
         run: Compress-Archive -Path DeviceFarmer_minicap/libs -DestinationPath libs.zip
 
-      - name: release-please-action
-        uses: google-github-actions/release-please-action@v3.1.2
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.14
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: DeviceFarmer_minicap
-          extra-files: libs.zip
+          name: ${{ env.current_commit_msg }}
+          body: This is an auto release by github actions
+          files: libs.zip
