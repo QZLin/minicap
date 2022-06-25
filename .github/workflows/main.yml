@@ -46,7 +46,7 @@ jobs:
           this_repo: ${{ env.GITHUB_REPOSITORY }}
           # a: hiworld
 
-      - name: check
+      - name: Check Commit
         id: checker
         run: . ./check_if_new.ps1
         env:
@@ -57,9 +57,9 @@ jobs:
       #   env:
       #     a: ${{ env.new_commit }}
 
-      - name: Cancel this build
+      - name: Cancel this build if not new
         uses: andymckay/cancel-action@0.2
-        if: ( ! (${{ env.new_commit }}) )
+        if: ${{ contains(env.new_commit,'false') }}
 
       - name: Set outputs
         id: out
@@ -82,7 +82,7 @@ jobs:
         with:
           ndk-version: r21e
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: DeviceFarmer/minicap
           submodules: true
