@@ -50,13 +50,14 @@ jobs:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
 
-      - run: echo v:$a
+      - name: test
+        run: echo v:$a
         env:
-          a: ${{ steps.checker.outputs.new_release }}
+          a: ${{ new_commit }}
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
-        if: ${{ steps.checker.outputs.new_release }}
+        if: ${{ new_commit }}
 
   build:
     needs: check
