@@ -11,7 +11,6 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   check:
-    needs: checkout
     name: Check if new commit
     defaults:
       run:
