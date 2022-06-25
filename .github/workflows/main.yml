@@ -51,7 +51,7 @@ jobs:
           last_release: ${{ steps.get_latest.outputs.releases }}
 
       - name: test
-        run: echo v:$a
+        run: echo v:$($Env:a)
         env:
           a: ${{ env.new_commit }}
 
