@@ -41,16 +41,18 @@ jobs:
           ls Env:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
-          this_repo: ${{ github.event.repository.owner }}/${{ github.event.repository.name }}
+          this_repo: ${{ env.GITHUB_REPOSITORY }}
           # a: hiworld
 
       - name: check
+        id: checker
         run: . ./check_if_new.ps1
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
+        if: ${{ steps.checker.outputs.new_release }}
 
   build:
     needs: check
