@@ -64,6 +64,9 @@ jobs:
         run: |
           echo "::set-output name=current_commit::$($Env:current_commit)"
           echo "::set-output name=current_commit_msg::$($Env:current_commit_msg)"
+    outputs:
+      commit: ${{ env.current_commit }}
+      msg: ${{ steps.out.outputs.current_commit_msg }}
 
   build:
     needs: check
@@ -112,7 +115,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.14
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: ${{ needs.check.out.current_commit_msg }}
-          tag: ${{ needs.check.out.current_commit }}
+          tag: ${{ needs.check.outputs.commit }}
+          name: ${{ needs.check.outputs.msg }}
           body: This is an auto release by github actions
           files: libs.zip
