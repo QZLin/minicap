@@ -42,7 +42,6 @@ jobs:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
           this_repo: ${{ github.event.repository.owner }}/${{ github.event.repository.name }}
-          this_repo2: ${{ github.event.repository}}
           # a: hiworld
 
       - name: check
