@@ -53,11 +53,11 @@ jobs:
       - name: test
         run: echo v:$a
         env:
-          a: ${{ new_commit }}
+          a: ${{ env.new_commit }}
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
-        if: ${{ new_commit }}
+        if: ${{ env.new_commit }}
 
   build:
     needs: check
