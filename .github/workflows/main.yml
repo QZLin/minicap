@@ -107,5 +107,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: ${{ env.current_commit_msg }}
+          tag: ${{ env.current_commit }}
           body: This is an auto release by github actions
           files: libs.zip
