@@ -18,12 +18,12 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Get Release
-        uses: joutvhu/get-release@v1.0.1
+        uses: ctrlaltdev/get-releases-action@v1.1.0
         id: get_latest
         with:
-          debug: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ github.action_repository }}
+          limit: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: test
         run: |
