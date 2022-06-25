@@ -20,11 +20,13 @@ jobs:
       - name: Get Release
         uses: joutvhu/get-release@v1.0.1
         id: get_latest
+        with:
+          debug: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo ${{ steps.get_latest.outputs.id }}
-      
+      - run: echo v:${{ get_latest.outputs.id }}; echo v:${{ get_latest.id }}
+
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
 
