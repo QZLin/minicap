@@ -85,16 +85,16 @@ jobs:
           ndk-build
           ls
           ls libs
-          Write-Output Build finish!
+          Write-Output Build finished!
           Pop-Location
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
           name: libs
-          path: libs
-          retention-days: 30
+          path: DeviceFarmer_minicap/libs
+          retention-days: 1
       - name: Compress output
-        run: Compress-Archive -Path DeviceFarmer_minicap/lib -DestinationPath libs.zip
+        run: Compress-Archive -Path DeviceFarmer_minicap/libs -DestinationPath libs.zip
 
       - name: release-please-action
         uses: google-github-actions/release-please-action@v3.1.2
