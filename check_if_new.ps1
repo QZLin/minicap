@@ -10,6 +10,6 @@ if (-not ($json.tag_name -eq $current_commit)) {
 else {
     $Env:new_commit = "false"
 }
-Write-Output "{new_commit}={${$Env:new_commit}}" >> $Env:GITHUB_ENV
-Write-Output "{new_commit}={${$Env:new_commit}}"
+Write-Output "{new_commit}={$($Env:new_commit)}" >> $Env:GITHUB_ENV
+Write-Output "{new_commit}={$($Env:new_commit)}"
 Pop-Location
