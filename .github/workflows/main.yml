@@ -50,6 +50,10 @@ jobs:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
 
+      - run: echo v:$a
+        env:
+          a: ${{ steps.checker.outputs.new_release }}
+
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
         if: ${{ steps.checker.outputs.new_release }}
@@ -66,10 +70,10 @@ jobs:
         with:
           ndk-version: r21e
 
-      # - uses: actions/checkout@v2
-      #   with:
-      #     repository: DeviceFarmer/minicap
-      #     submodules: true
+      - uses: actions/checkout@v2
+        with:
+          repository: DeviceFarmer/minicap
+          submodules: true
 
       - run: ls
 
