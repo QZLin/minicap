@@ -11,12 +11,21 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   check:
+    needs: checkout
     name: Check if new commit
     defaults:
       run:
         shell: pwsh
     runs-on: windows-latest
     steps:
+      # checkout
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: DeviceFarmer/minicap
+          submodules: true
+          path: DeviceFarmer_minicap
+
       - name: Get Release
         uses: ctrlaltdev/get-releases-action@v1.1.0
         id: get_latest
@@ -25,21 +34,15 @@ jobs:
           limit: 1
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v2
-        with:
-          repository: DeviceFarmer/minicap
-          submodules: true
-          path: DeviceFarmer_minicap
-
       - name: test
         run: |
           echo v:$env:last_release
           echo v:$env:this_repo
           # echo v:$env:a
-          ls Env:
+          # ls Env:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
-          this_repo: ${{ github.GITHUB_REPOSITORY }}
+          this_repo: ${{ github.event.repository.name }}
           # a: hiworld
 
       - name: check
