@@ -75,18 +75,30 @@ jobs:
         with:
           repository: DeviceFarmer/minicap
           submodules: true
+          path: DeviceFarmer_minicap
 
       - run: ls
 
       - name: Build
         run: |
+          Push-Location DeviceFarmer_minicap
           ndk-build
           ls
           ls libs
           Write-Output Build finish!
+          Pop-Location
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
           name: libs
           path: libs
           retention-days: 30
+      - name: Compress output
+        run: Compress-Archive -Path DeviceFarmer_minicap/lib -DestinationPath libs.zip
+
+      - name: release-please-action
+        uses: google-github-actions/release-please-action@v3.1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: DeviceFarmer_minicap
+          extra-files: libs.zip
