@@ -59,7 +59,7 @@ jobs:
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
-        if: ${{ ! env.new_commit }}
+        if: ! (${{ env.new_commit }})
 
       - name: Set outputs
         id: out
