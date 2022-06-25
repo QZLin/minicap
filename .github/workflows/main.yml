@@ -39,7 +39,7 @@ jobs:
           ls Env:
         env:
           last_release: ${{ steps.get_latest.outputs.releases }}
-          this_repo: ${{ GITHUB_REPOSITORY }}
+          this_repo: ${{ github.GITHUB_REPOSITORY }}
           # a: hiworld
 
       - name: check
