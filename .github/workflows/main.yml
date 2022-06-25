@@ -1,6 +1,8 @@
 name: Build minicap
 
 on:
+  schedule:
+    - cron: "0 0 * * *"
   push:
     branches: [master]
   pull_request:
@@ -75,32 +77,32 @@ jobs:
         shell: pwsh
     runs-on: windows-latest
     steps:
-      # - name: Android NDK toolchain Setup
-      #   uses: nttld/setup-ndk@v1.0.6
-      #   with:
-      #     ndk-version: r21e
+      - name: Android NDK toolchain Setup
+        uses: nttld/setup-ndk@v1.0.6
+        with:
+          ndk-version: r21e
 
-      # - uses: actions/checkout@v2
-      #   with:
-      #     repository: DeviceFarmer/minicap
-      #     submodules: true
-      #     path: DeviceFarmer_minicap
+      - uses: actions/checkout@v2
+        with:
+          repository: DeviceFarmer/minicap
+          submodules: true
+          path: DeviceFarmer_minicap
 
-      # - run: ls
+      - run: ls
 
-      # - name: Build
-      #   run: |
-      #     Push-Location DeviceFarmer_minicap
-      #     ndk-build
-      #     ls
-      #     ls libs
-      #     Write-Output Build finished!
-      #     Pop-Location
-      - name: Create fake output files for actions debug
+      - name: Build
         run: |
-          mkdir DeviceFarmer_minicap
-          mkdir DeviceFarmer_minicap/libs
-          New-Item .\DeviceFarmer_minicap\libs\test.txt
+          Push-Location DeviceFarmer_minicap
+          ndk-build
+          ls
+          ls libs
+          Write-Output Build finished!
+          Pop-Location
+      # - name: Create fake output files for actions debug
+      #   run: |
+      #     mkdir DeviceFarmer_minicap
+      #     mkdir DeviceFarmer_minicap/libs
+      #     New-Item .\DeviceFarmer_minicap\libs\test.txt
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2.2.4
