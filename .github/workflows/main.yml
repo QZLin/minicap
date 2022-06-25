@@ -27,8 +27,8 @@ jobs:
 
       - name: test
         run: |
-          echo v:${{ steps.get_latest.id }}
-          echo v:${{ steps.id }}
+          echo v:${{ steps.get_latest.releases }}
+          echo v:${{ github.action_repository }}
 
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
