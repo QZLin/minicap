@@ -8,9 +8,24 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
 jobs:
   # This workflow contains a single job called "build"
+  check:
+    name: Check if new commit
+    defaults:
+      run:
+        shell: pwsh
+    runs-on: windows-latest
+    steps:
+      - name: Get last release info
+        id: get_latest
+        uses: ctrlaltdev/get-releases-action@latest
+        with:
+          repo: ctrlaltdev/get-releases-action
+      - run: echo ${{ steps.get_latest.releases }}
+      - name: Cancel this build
+        uses: andymckay/cancel-action@0.2
+
   build:
     defaults:
       run:
