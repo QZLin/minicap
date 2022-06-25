@@ -31,7 +31,7 @@ jobs:
           echo v:$env:this_repo
           echo v:$env:a
         env:
-          last_release: ${{ steps.get_latest.releases }}
+          last_release: ${{ steps.get_latest.outputs.releases }}
           this_repo: ${{ github.action_repository }}
           a: hiworld
 
