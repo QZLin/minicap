@@ -17,12 +17,12 @@ jobs:
         shell: pwsh
     runs-on: windows-latest
     steps:
-      - name: Get last release info
+      - name: Get Release
+        uses: joutvhu/get-release@v1.0.1
         id: get_latest
-        uses: ctrlaltdev/get-releases-action@latest
         with:
-          repo: ctrlaltdev/get-releases-action
-      - run: echo ${{ steps.get_latest.releases }}
+          repo: QZLin/minicap
+      - run: echo ${{ steps.get_latest.id }}
       - name: Cancel this build
         uses: andymckay/cancel-action@0.2
 
